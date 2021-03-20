@@ -1,112 +1,107 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
+import React, { useState } from 'react';
+import { Text, View, StyleSheet, TextInput, TouchableHighlight, Image } from 'react-native';
 
-import React from 'react';
-import type {Node} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+export default function calcimc() {
 
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const [peso, setPeso] = useState(0)
+  const [altura, setAltura] = useState(0)
+  const [resultado, setResultado] = useState(0)
+
+ const calcImc = () => {
+    if(peso == 0 || !peso){
+        alert('Informe o Peso!')
+        return
+    }
+    if(altura == 0 || !altura){
+      alert('Informa a Altura!')
+      return
+    }
+
+    const res = peso / (Math.pow(altura,2))
+    setResultado(res.toFixed(1))
+ }
+
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
+    <View style={estilos.corpo}>
+      <View style={estilos.bloco}>
+        <Text>Calculadora de IMC</Text>
+      </View>
+      <View style={estilos.corpo}>
+        <Text>Digite o seu peso:</Text>
+        <TextInput
+          style={estilos.texto}
+          autoFocus={true}
+          keyboardType={'numeric'}
+          onChangeText={text => setPeso(text)}
+        />
+      </View>
+      <View style={estilos.corpo}>
+        <Text>Digite a sua altura:</Text>
+        <TextInput
+          style={estilos.texto}
+          autoFocus={false}
+          keyboardType={'numeric'}
+          onChangeText={text => setAltura(text)}
+        />
+      </View>
+      <View style={estilos.corpo}>
+        <TouchableHighlight
+
+          style={estilos.btnCal}
+          onPress={() => calcImc()}
+
+        >
+          <Text style={estilos.textBtn}>Calcular IMC</Text>
+        </TouchableHighlight>
+      </View>
+
+      <View style={estilos.corpo}>
+        <Text>Resultado: {resultado}</Text>
+      </View>
+      
+      <View style={estilos.corpo}>
+          <Image style={estilos.imagemRes} source={require('../calcimc/tabela.png')}/>
+      </View>
     </View>
-  );
-};
+  )
 
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+}
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+const estilos = StyleSheet.create({
 
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-};
+  corpo: {
+    padding: 10
+  },
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  bloco: {
+    marginBottom: 20
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+
+  texto: {
+    width: '100%',
+    borderWidth: 1,
+    borderColor: '#000',
+    padding: 10,
+    borderRadius: 10,
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+
+  btnCal: {
+    backgroundColor: '#048',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 10
   },
-  highlight: {
-    fontWeight: '700',
+
+  textBtn: {
+    fontSize: 15,
+    textTransform: 'uppercase',
+    color: '#fff'
   },
+
+  imagemRes:{
+    width: '100%'
+  }
+
 });
-
-export default App;
