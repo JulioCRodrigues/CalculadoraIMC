@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, TextInput, TouchableHighlight, Image } from 'react-native';
-
+import { Text, View, StyleSheet, Image } from 'react-native';
+import Peso from './componentes/peso';
+import Altura from './componentes/altura';
+import BtnCalcular from './componentes/btncalcular';
+import Resultado from './componentes/resultado';
+import Tabela from './componentes/tabela';
 
 export default function calcimc() {
 
@@ -27,42 +31,18 @@ export default function calcimc() {
       <View style={estilos.bloco}>
         <Text>Calculadora de IMC</Text>
       </View>
-      <View style={estilos.corpo}>
-        <Text>Digite o seu peso:</Text>
-        <TextInput
-          style={estilos.texto}
-          autoFocus={true}
-          keyboardType={'numeric'}
-          onChangeText={text => setPeso(text)}
-        />
-      </View>
-      <View style={estilos.corpo}>
-        <Text>Digite a sua altura:</Text>
-        <TextInput
-          style={estilos.texto}
-          autoFocus={false}
-          keyboardType={'numeric'}
-          onChangeText={text => setAltura(text)}
-        />
-      </View>
-      <View style={estilos.corpo}>
-        <TouchableHighlight
-
-          style={estilos.btnCal}
-          onPress={() => calcImc()}
-
-        >
-          <Text style={estilos.textBtn}>Calcular IMC</Text>
-        </TouchableHighlight>
-      </View>
-
-      <View style={estilos.corpo}>
-        <Text>Resultado: {resultado}</Text>
-      </View>
       
-      <View style={estilos.corpo}>
-          <Image style={estilos.imagemRes} source={require('../calcimc/tabela.png')}/>
-      </View>
+      <Peso aoModificar={setPeso}/>
+      <Altura aoModificar={setAltura}/>
+      <BtnCalcular aoClicar={calcImc}/>
+      <Resultado resultado={resultado}/>
+      <Tabela/>
+      
+      
+
+      
+      
+      
     </View>
   )
 
@@ -77,31 +57,5 @@ const estilos = StyleSheet.create({
   bloco: {
     marginBottom: 20
   },
-
-  texto: {
-    width: '100%',
-    borderWidth: 1,
-    borderColor: '#000',
-    padding: 10,
-    borderRadius: 10,
-  },
-
-  btnCal: {
-    backgroundColor: '#048',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 10,
-    borderRadius: 10
-  },
-
-  textBtn: {
-    fontSize: 15,
-    textTransform: 'uppercase',
-    color: '#fff'
-  },
-
-  imagemRes:{
-    width: '100%'
-  }
 
 });
